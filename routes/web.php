@@ -21,26 +21,28 @@ Route::middleware(['setLocale'])->group(function () {
 
     // --- PUBLIC / USER ROUTES ---
     // Homepage
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
     // Cart Routes (Must be logged in)
-    Route::middleware(['auth'])->group(function() {
-        Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
-        Route::post('/cart/add/{id}', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
-        Route::patch('/cart/update/{id}', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
-        Route::delete('/cart/delete/{id}', [App\Http\Controllers\CartController::class, 'destroy'])->name('cart.delete');
-        Route::post('/checkout', [App\Http\Controllers\CartController::class, 'checkout'])->name('checkout');
-        Route::get('/success', function() { return view('success'); })->name('success');
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+        Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+        Route::patch('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+        Route::delete('/cart/delete/{id}', [CartController::class, 'destroy'])->name('cart.delete');
+        Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+        Route::get('/success', function () {
+            return view('success');
+        })->name('success');
     });
 
     // --- ADMIN ROUTES (Protected by isAdmin) ---
     Route::middleware(['auth', 'isAdmin'])->prefix('admin')->group(function () {
-        Route::get('/home', [App\Http\Controllers\BookController::class, 'index'])->name('admin.home');
-        Route::get('/create', [App\Http\Controllers\BookController::class, 'create'])->name('books.create');
-        Route::post('/store', [App\Http\Controllers\BookController::class, 'store'])->name('books.store');
-        Route::get('/edit/{id}', [App\Http\Controllers\BookController::class, 'edit'])->name('books.edit');
-        Route::put('/update/{id}', [App\Http\Controllers\BookController::class, 'update'])->name('books.update');
-        Route::delete('/delete/{id}', [App\Http\Controllers\BookController::class, 'destroy'])->name('books.delete');
+        Route::get('/home', [BookController::class, 'index'])->name('admin.home');
+        Route::get('/create', [BookController::class, 'create'])->name('books.create');
+        Route::post('/store', [BookController::class, 'store'])->name('books.store');
+        Route::get('/edit/{id}', [BookController::class, 'edit'])->name('books.edit');
+        Route::put('/update/{id}', [BookController::class, 'update'])->name('books.update');
+        Route::delete('/delete/{id}', [BookController::class, 'destroy'])->name('books.delete');
     });
 
 });

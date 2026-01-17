@@ -14,16 +14,11 @@ class CartController extends Controller
 
     public function add($id)
     {
-        // 1. Ensure the user is logged in (Redundant if middleware is set, but safe)
         if (!auth()->check()) {
             return redirect()->route('login');
         }
 
-        // 2. Find the book
         $book = Book::find($id);
-
-        // 3. Add to Cart Logic
-        // (This checks if the user already has this book in cart. If yes, add +1 qty. If no, create it.)
         $cartItem = Cart::where('user_id', auth()->id())
             ->where('book_id', $id)
             ->first();
@@ -39,8 +34,6 @@ class CartController extends Controller
             ]);
         }
 
-        // 4. THE FIX: Redirect to the Cart Page
-        // This forces the page to change so you KNOW it worked.
         return redirect()->back()->with('success', 'Added to cart!');
     }
 
