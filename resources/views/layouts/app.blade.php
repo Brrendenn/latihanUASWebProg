@@ -60,8 +60,8 @@
                         <li class="nav-item dropdown">
                             <a id="navbarDropdownLang" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-bs-toggle="dropdown">
-                                {{ strtoupper(app()->getLocale()) }} </a>
-
+                                {{ strtoupper(app()->getLocale()) }} 
+                            </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownLang">
                                 <a class="dropdown-item" href="{{ route('lang.switch', 'en') }}">
                                     English
